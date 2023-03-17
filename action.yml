@@ -1,0 +1,17 @@
+name: 'Terraform module version update'
+description: 'Update terraform module versions'
+inputs:
+  github-api-token:  # id of input
+    description: 'Token which will be used for accessing github api'
+    required: true
+  root-path:  # id of input
+    description: 'Path where script will start recursively searching for backend.tf files'
+    required: false
+    default: '.'
+  environment:
+    description: 'Terraform environment'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
