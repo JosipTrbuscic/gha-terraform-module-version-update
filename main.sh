@@ -7,6 +7,9 @@ set -euo pipefail
 ENV="${INPUT_ENVIRONMENT}"
 GITHUB_TOKEN="${INPUT_GITHUB_API_TOKEN}"
 
+eval `ssh-agent -s`
+ssh-add - <<< "${INPUT_SSH_PRIVATE_KEY}"
+
 changed=()
 errored=()
 
