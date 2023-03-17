@@ -2,7 +2,7 @@
 FROM alpine:3.17
 
 # git, bash, curl
-RUN apk add --no-cache git bash curl tree sed make jq
+RUN apk add --no-cache git bash curl tree sed make jq openssh
 
 # Install golang
 COPY --from=golang:1.19-alpine /usr/local/go/ /usr/local/go/

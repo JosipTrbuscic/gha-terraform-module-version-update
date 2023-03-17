@@ -35,11 +35,12 @@ function get_tags_api_url_for_source() {
 
 function get_latest_tag() {
   api_url=$1
-  tag_name=$(curl -L \
+  tags=$(curl -L \
     -H "Accept: application/vnd.github+json" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
     -H "Authorization: Bearer $GITHUB_TOKEN" \
-    "$api_url" | jq '.[0].name' | sed 's/"//g')
+    "$api_url")
+  tag_name=$(echo $tags | jq '.[0].name' | sed 's/"//g')
   echo "$tag_name"
 }
 
@@ -68,7 +69,9 @@ do
       do
         source=$(hcledit attribute get "${module}.source" -f $file)
         url=$(get_tags_api_url_for_source $source)
+        echo "URL: $url"
         tag=$(get_latest_tag $url)
+        echo "TAG: $tag"
         if [[ "$source" != "\"git@github.com"* ]]; then
           echo "Local: $source"
           continue
