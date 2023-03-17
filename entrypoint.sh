@@ -6,5 +6,6 @@ pwd
 cd $GITHUB_WORKSPACE
 pwd
 ls -al 
+env
 echo "Running script"
 bash /main.sh
