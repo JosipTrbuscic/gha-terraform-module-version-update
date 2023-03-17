@@ -11,7 +11,7 @@ inputs:
   environment:
     description: 'Terraform environment'
     required: true
-  private_ssh_key:
+  input_ssh_private_key:
     description: 'Private deploy key'
     required: true
 
