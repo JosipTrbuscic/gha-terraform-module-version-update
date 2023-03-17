@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "Executing script"
+export TF_LOG=TRACE
 
 set -euo pipefail
 # set -x
