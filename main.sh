@@ -113,6 +113,8 @@ do
     cd $current_dir
 done
 
-git log | head -n 50
+git cherry -v master
+echo "Pushing"
+git push -u origin 
 echo "Changed: ${changed}"
 echo "Errored: ${errored}"
