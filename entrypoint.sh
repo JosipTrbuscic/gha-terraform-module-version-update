@@ -5,4 +5,4 @@ echo "PWD"
 pwd
 cd $GITHUB_WORKSPACE
 echo "Running script"
-bash main.sh
+bash /main.sh
