@@ -6,13 +6,13 @@ set -euo pipefail
 # set -x
 
 ENV="${INPUT_ENVIRONMENT}"
-GITHUB_TOKEN="${INPUT_GITHUB-API-TOKEN}"
+GITHUB_TOKEN="${INPUT_GITHUB_API_TOKEN}"
 
 changed=()
 errored=()
 
 current_dir=$(pwd)
-start_dir="${INPUT_ROOT-PATH}"
+start_dir="${INPUT_ROOT_PATH}"
 
 function git_commit() {
   dir=$1
