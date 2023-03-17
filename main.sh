@@ -43,6 +43,11 @@ function get_latest_tag() {
   echo "$tag_name"
 }
 
+echo "PWD"
+pwd
+echo "LS"
+ls -al 
+echo "Start dir: $start_dir"
 # Iterate over directories which contain backend.tf file
 for dir in $(find $start_dir -type f -name "backend.tf" -not -path "*.terraform/*" | sed 's/backend.tf//')
 do
