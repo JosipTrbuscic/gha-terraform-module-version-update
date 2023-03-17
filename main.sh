@@ -7,11 +7,6 @@ set -euo pipefail
 ENV="${INPUT_ENVIRONMENT}"
 GITHUB_TOKEN="${INPUT_GITHUB_API_TOKEN}"
 
-mkdir -p ~/.ssh
-ssh-keyscan github.com >> ~/.ssh/known_hosts
-echo "Known hosts"
-cat ~/.ssh/known_hosts
-
 changed=()
 errored=()
 

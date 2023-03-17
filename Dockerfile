@@ -25,6 +25,9 @@ ENV PATH="${PATH}:/tfenv/bin"
 RUN tfenv install 1.3.9
 RUN tfenv use 1.3.9
 
+RUN mkdir -p ~/.ssh
+RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
+
 #App 
 COPY main.sh /main.sh
 
