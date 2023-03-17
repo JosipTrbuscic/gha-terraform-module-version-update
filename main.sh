@@ -113,7 +113,6 @@ do
     cd $current_dir
 done
 
-git cherry -v master
 echo "Pushing"
 git push -u origin 
 echo "Changed: ${changed}"
