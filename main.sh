@@ -6,6 +6,8 @@ set -euo pipefail
 
 ENV="${INPUT_ENVIRONMENT}"
 GITHUB_TOKEN="${INPUT_GITHUB_API_TOKEN}"
+TARGET_TAG=""
+BRANCH=""
 
 eval `ssh-agent -s`
 ssh-add - <<< "${INPUT_SSH_PRIVATE_KEY}"
@@ -21,7 +23,8 @@ function git_commit() {
   module=$2
   target_version=$3
 
-  git switch -C "${ENV}-${target_version}"
+  BRANCH="${ENV}-${target_version}"
+  git switch -C $BRANCH
   git commit -am "Bumped ${module} to ${target_version}"
 }
 
@@ -71,19 +74,22 @@ do
       for module in $modules
       do
         source=$(hcledit attribute get "${module}.source" -f $file)
-        url=$(get_tags_api_url_for_source $source)
-        echo "URL: $url"
-        tag=$(get_latest_tag $url)
-        echo "TAG: $tag"
+        if [[ -z $TARGET_TAG ]]; then
+          url=$(get_tags_api_url_for_source $source)
+          echo "URL: $url"
+          tag=$(get_latest_tag $url)
+          echo "TAG: $tag"
+          TARGET_TAG="$tag"
+        fi
         if [[ "$source" != "\"git@github.com"* ]]; then
           echo "Local: $source"
           continue
         else
-          if [[ "$source" == *"$tag"* ]]; then
+          if [[ "$source" == *"$TARGET_TAG"* ]]; then
             echo "Already at latest change"
             break
           fi
-          ns=$(echo $source | sed "s/ref=v.*\"/ref=$tag\"/")
+          ns=$(echo $source | sed "s/ref=v.*\"/ref=$TARGET_TAG\"/")
           hcledit attribute set "$module".source $ns -f $file -u
         fi
         new_source=$(hcledit attribute get "${module}.source" -f $file)
@@ -105,7 +111,7 @@ do
             ;;
           *)
             echo "No changes, commiting"
-            git_commit $dir $module $tag
+            git_commit $dir $module $TARGET_TAG
             ;;
         esac
       done
@@ -114,6 +120,6 @@ do
 done
 
 echo "Pushing"
-git push -u origin 
+git push -u origin $BRANCH
 echo "Changed: ${changed}"
 echo "Errored: ${errored}"
