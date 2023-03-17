@@ -19,9 +19,10 @@ start_dir="${INPUT_ROOT_PATH}"
 function git_commit() {
   dir=$1
   module=$2
+  target_version=$3
 
-  git switch -C "${ENV}-${TARGET_VERSION}"
-  git commit -am "Bumped ${module} to ${TARGET_VERSION}"
+  git switch -C "${ENV}-${target_version}"
+  git commit -am "Bumped ${module} to ${target_version}"
 }
 
 function git_revert() {
@@ -104,7 +105,7 @@ do
             ;;
           *)
             echo "No changes, commiting"
-            git_commit $dir $module
+            git_commit $dir $module $tag
             ;;
         esac
       done
