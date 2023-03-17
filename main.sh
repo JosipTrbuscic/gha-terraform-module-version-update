@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Executing script"
+
 set -euo pipefail
 # set -x
 
