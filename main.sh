@@ -1,13 +1,14 @@
 #!/bin/bash
 
 echo "Executing script"
-export TF_LOG=TRACE
-
 set -euo pipefail
 # set -x
 
 ENV="${INPUT_ENVIRONMENT}"
 GITHUB_TOKEN="${INPUT_GITHUB_API_TOKEN}"
+
+mkdir -p ~/.ssh
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
 changed=()
 errored=()
