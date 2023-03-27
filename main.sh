@@ -3,6 +3,15 @@
 echo "Executing script"
 set -euo pipefail
 # set -x
+#
+
+function print_array() {
+    arr=$1
+    for value in "${arr[@]}"
+    do
+      echo $value
+    done
+}
 
 ENV="${INPUT_ENVIRONMENT}"
 GITHUB_TOKEN="${INPUT_GITHUB_API_TOKEN}"
@@ -121,5 +130,7 @@ done
 
 echo "Pushing"
 git push -u origin $BRANCH
-echo "Changed: ${changed}"
-echo "Errored: ${errored}"
+echo "Changed:"
+print_array $changed
+echo "Errored:"
+print_array $errored
