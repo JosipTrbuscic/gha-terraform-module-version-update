@@ -109,14 +109,14 @@ do
 
 	dir_name=$(basename $dir)
         case $ret in
-          2)
+          1)
             echo "Error during plan, not commiting this change"
             errored+=("${dir_name}")
 	    echo "ERRORED"
 	    echo "${errored[@]}"
             git_revert
             ;;
-          1)
+          2)
             echo "Changes detected during plan, not commiting this change"
             changed+=("${dir_name}")
 	    echo "CHANGED"
