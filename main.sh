@@ -107,15 +107,20 @@ do
         ret=0
         terraform plan -detailed-exitcode || ret=$?
 
+	dir_name=$(basename $dir)
         case $ret in
           2)
             echo "Error during plan, not commiting this change"
-            errored+=("${dir}-${module}")
+            errored+=("${dir_name}")
+	    echo "ERRORED"
+	    echo "${errored[@]}"
             git_revert
             ;;
           1)
             echo "Changes detected during plan, not commiting this change"
-            changed+=("${dir}-${module}")
+            changed+=("${dir_name}")
+	    echo "CHANGED"
+	    echo "${changed[@]}"
             git_revert
             ;;
           *)
@@ -130,7 +135,3 @@ done
 
 echo "Pushing"
 git push -u origin $BRANCH
-echo "Changed:"
-print_array $changed
-echo "Errored:"
-print_array $errored
